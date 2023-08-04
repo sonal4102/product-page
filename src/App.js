@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from "./Components/Header";
+import AnnouncementBar from "./Components/AnnouncementBar";
+import Product from "./Components/Product";
+import { useSelector } from "react-redux";
 function App() {
+  const state = useSelector((state) => state.handleCart);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <AnnouncementBar />
+
+      <header className="bg-gray-800 text-white py-2 px-6 flex items-center justify-between">
+        <div></div>
+        <div className="flex items-center">
+          <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
+        </div>
       </header>
-    </div>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Header />} />
+
+          <Route path="/products/:id" element={<Product />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
